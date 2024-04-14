@@ -1,8 +1,100 @@
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
+import usePopup from "../../hooks/usePopup";
+import PopupBox from "../../components/PopupBox";
+import { createPortal } from "react-dom";
+import axios from "axios";
 
 export default function WithdrawlPage() {
   const [upi, setUpi] = useState("");
+  const [bank, setBank] = useState({
+    name: "",
+    accountNumber: "",
+    ifsc: "",
+    mobile: "",
+  });
+
+  const { HidePopup, ShowPopup, popupIsOpened, popupContent, setPopupContent } =
+    usePopup();
+
+  function ValidateUpiId(upiId: string) {
+    const regex = /^([a-zA-Z1-9-]+)@([a-zA-Z]+)$/;
+    if (regex.test(upiId)) {
+      return true;
+    }
+    return false;
+  }
+
+  function postData(type: number) {
+    // axios
+    //   .post(`${import.meta.env.VITE_SERVER}/withdrawl-details`, {
+    //     upi: upi,
+    //     bank: bank,
+    //     type: type,
+    //   })
+    //   .then((res) => {})
+    //   .catch((err) => {
+    //     console.log(err);
+    //   });
+  }
+
+  function handleSubmit() {
+    console.log(upi, bank);
+    if (
+      upi &&
+      !bank.name &&
+      !bank.accountNumber &&
+      !bank.ifsc &&
+      !bank.mobile
+    ) {
+      // Withdrawl using UPI
+      if (ValidateUpiId(upi)) {
+        console.log("Valid UPI");
+        postData(1);
+      } else {
+        setPopupContent({
+          title: "Invalid UPI ID",
+          content: "Please enter a valid UPI Id.",
+          onClick: HidePopup,
+        });
+        ShowPopup();
+      }
+    } else if (!upi && bank.name && bank.accountNumber && bank.ifsc) {
+      // Withdrawl using Bank Details
+      postData(2);
+    } else if (
+      upi &&
+      bank.name &&
+      bank.accountNumber &&
+      bank.ifsc &&
+      bank.mobile
+    ) {
+      // Withdrawl using UPI and Bank Details
+
+      if (ValidateUpiId(upi)) {
+        console.log("Valid UPI");
+        postData(3);
+      } else {
+        console.log("Invalid UPI");
+        setPopupContent({
+          title: "Invalid UPI ID",
+          content: "Please enter a valid UPI Id.",
+          onClick: HidePopup,
+        });
+        ShowPopup();
+      }
+    } else {
+      // Show Error
+      setPopupContent({
+        title: "Insufficient Details",
+        content:
+          "Enter Both Details or Any One Of Them, But Can't Enter Partial Details.",
+        onClick: HidePopup,
+      });
+      ShowPopup();
+    }
+  }
+
   const [hideSuggestions, setHideSuggestions] = useState(false);
   const suggestions = [
     { s: "okhdfcbank", k: 0 },
@@ -75,7 +167,7 @@ export default function WithdrawlPage() {
     <div className="withdrawl-page page payment-page split-page">
       <div className="left">
         <div className="heading">
-          <p className="title">Withdrawl</p>
+          <p className="title">Withdrawl Details</p>
         </div>
         <motion.div
           initial={{ opacity: 0, x: -60 }}
@@ -83,7 +175,7 @@ export default function WithdrawlPage() {
           whileInView={{ opacity: 1, x: 0 }}
           className="payment-option"
         >
-          {/* <p className="title">Upi Id :</p> */}
+          <p className="title">Upi Id :</p>
           <input
             type="text"
             placeholder="Enter Upi Id"
@@ -120,14 +212,59 @@ export default function WithdrawlPage() {
           transition={{ delay: 0.1, duration: 0.25 }}
           whileInView={{ opacity: 1, x: 0 }}
           className="payment-option"
+        ></motion.div>
+        <p className="or">Or</p>
+
+        <motion.div
+          initial={{ opacity: 0, x: 60 }}
+          transition={{ delay: 0.1, duration: 0.25 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          className="payment-option bank-details"
         >
-          {/* <p className="title">Amount</p> */}
-          <input type="number" placeholder="Enter Amount" />
+          <div className="title">Bank Details :</div>
+          <input
+            type="text"
+            placeholder="Enter Name"
+            value={bank.name}
+            onChange={(e) => setBank({ ...bank, name: e.target.value })}
+          />
+          <input
+            type="number"
+            placeholder="Enter Bank Account Number"
+            value={bank.accountNumber}
+            onChange={(e) =>
+              setBank({ ...bank, accountNumber: e.target.value })
+            }
+          />
+          <input
+            type="text"
+            placeholder="Enter IFSC Code"
+            value={bank.ifsc}
+            onChange={(e) => setBank({ ...bank, ifsc: e.target.value })}
+          />
+          <input
+            type="number"
+            placeholder="Enter Mobile Number"
+            value={bank.mobile}
+            onChange={(e) => setBank({ ...bank, mobile: e.target.value })}
+          />
         </motion.div>
         <div className="btn-row">
-          <button className="submit">Withdrawl</button>
+          <button className="submit" onClick={handleSubmit}>
+            Submit
+          </button>
         </div>
       </div>
+      {popupIsOpened &&
+        createPortal(
+          <PopupBox
+            content={popupContent.content}
+            title={popupContent.title}
+            onClick={popupContent.onClick}
+          />,
+          document.getElementById("overlay")!
+        )}
+
       <div className="cross-bar"></div>
       <div className="right"></div>
     </div>
