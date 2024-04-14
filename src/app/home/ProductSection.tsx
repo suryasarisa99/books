@@ -13,6 +13,8 @@ export default function ProductSection() {
       navigate("/register");
       return;
     }
+    if (user.products.length > 0) return;
+
     axios
       .post(`${import.meta.env.VITE_SERVER}/payment/pay`, {
         _id: user._id,
@@ -43,7 +45,7 @@ export default function ProductSection() {
         draggable={false}
         alt="product page"
       />
-      {
+      {!user || user.products.length == 0 ? (
         <motion.button
           initial={{ opacity: 0, y: 100 }}
           transition={{ delay: 0.3, duration: 0.3 }}
@@ -53,7 +55,17 @@ export default function ProductSection() {
         >
           Buy Now
         </motion.button>
-      }
+      ) : (
+        <motion.button
+          initial={{ opacity: 0, y: 100 }}
+          transition={{ delay: 0.3, duration: 0.3 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          className="floating-btn"
+          onClick={() => navigate("/pdf")}
+        >
+          View Book
+        </motion.button>
+      )}
     </div>
   );
 }

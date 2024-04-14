@@ -7,6 +7,7 @@ export type UserType = {
   verified: boolean;
   parents: string[];
   transactions: any[];
+  products: string[];
   children: {
     level1: { _id: string; valid: boolean }[];
     level2: { _id: string; valid: boolean }[];

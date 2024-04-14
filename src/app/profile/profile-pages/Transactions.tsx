@@ -1,8 +1,10 @@
 import React, { useState, useEffect, useRef } from "react";
 import TopPageBar from "../../../components/TopPageBar";
 import { useNavigate } from "react-router-dom";
+import useData from "../../../hooks/useData";
 export default function TrnasactionsPage() {
   const navigate = useNavigate();
+  const { user } = useData();
   useEffect(() => {
     const metaThemeColor = document.querySelector("meta[name=theme-color]");
     if (!metaThemeColor) return;
@@ -17,8 +19,21 @@ export default function TrnasactionsPage() {
     }
   }, []);
   return (
-    <div>
+    <div className="transactions-page">
       <TopPageBar title="Transactions" onClick={() => navigate(-1)} />
+      <div className="transactions">
+        {user?.transactions.map((transaction, index) => {
+          return (
+            <div className="transaction" key={transaction._id}>
+              <p className="transaction-type">{transaction.transaction_type}</p>
+              <p className={"transaction-type " + transaction.status}>
+                {transaction.status}
+              </p>
+              <p className="transaction-type">{transaction.amount}</p>
+            </div>
+          );
+        })}
+      </div>
     </div>
   );
 }

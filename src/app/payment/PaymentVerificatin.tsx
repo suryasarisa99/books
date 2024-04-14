@@ -1,7 +1,8 @@
 import axios from "axios";
+import { motion } from "framer-motion";
 import React, { useState, useEffect, useRef } from "react";
 import useData from "../../hooks/useData";
-
+import { Link } from "react-router-dom";
 export default function PaymentVerification() {
   const { token, setToken, setIsLoggedIn, setUser } = useData();
   const [loading, setLoading] = useState(true);
@@ -33,23 +34,31 @@ export default function PaymentVerification() {
         .finally(() => {
           setLoading(false);
         });
-    }, 1000);
+    }, 500);
   }, []);
 
   if (loading) {
     return (
-      <div>
+      <div className="payment-verification loading">
         <div>
-          <h1>Please Wait Verifying Payment</h1>
+          <p>Verifying Payment ...</p>
         </div>
       </div>
     );
   }
+
   return (
-    <div>
-      <div>
-        <h1>Payment Is {verified ? "Verified" : "NOt Verified"}</h1>
-      </div>
+    <div className="payment-verification success">
+      <motion.div
+        initial={{ opacity: 0, scale: 0.5, y: 300 }}
+        transition={{ duration: 0.5 }}
+        whileInView={{ opacity: 1, scale: 1, y: 0 }}
+        className={"bubble " + (verified ? "success" : "error")}
+      >
+        <p>{verified ? "Success" : "Failed"}</p>
+      </motion.div>
+
+      <Link to="/">Go HOME</Link>
     </div>
   );
 }

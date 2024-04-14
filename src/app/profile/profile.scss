@@ -137,3 +137,18 @@
     }
   }
 }
+
+.transactions-page {
+  .transaction {
+    display: flex;
+    gap: 15px;
+    padding: 8px 14px;
+
+    .Success {
+      color: green;
+    }
+    .initiated {
+      color: rgb(87, 87, 87);
+    }
+  }
+}
