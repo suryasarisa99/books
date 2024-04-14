@@ -13,7 +13,23 @@ import TrnasactionsPage from "./app/profile/profile-pages/Transactions";
 import ReferalsPage from "./app/profile/profile-pages/Referals";
 import PdfViewer from "./app/PDFViewer";
 
+import { useEffect } from "react";
+
 export default function App() {
+  useEffect(() => {
+    const metaThemeColor = document.querySelector("meta[name=theme-color]");
+    if (!metaThemeColor) return;
+
+    if (
+      window.matchMedia &&
+      window.matchMedia("(prefers-color-scheme: dark)").matches
+    ) {
+      metaThemeColor.setAttribute("content", "#1c1c1c");
+    } else {
+      metaThemeColor.setAttribute("content", "#f5f4f0");
+    }
+  }, []);
+
   return (
     <div>
       <Routes>
