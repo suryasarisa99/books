@@ -22,6 +22,20 @@ export default function WithdrawlPage() {
   }, [upi]);
 
   useEffect(() => {
+    const metaThemeColor = document.querySelector("meta[name=theme-color]");
+    if (!metaThemeColor) return;
+
+    if (
+      window.matchMedia &&
+      window.matchMedia("(prefers-color-scheme: dark)").matches
+    ) {
+      metaThemeColor.setAttribute("content", "#1c1c1c");
+    } else {
+      metaThemeColor.setAttribute("content", "#f5f4f0");
+    }
+  }, []);
+
+  useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       const filterSuggestions = suggestions.filter((sugg) =>
         sugg.s.includes(upi.split("@")[1])

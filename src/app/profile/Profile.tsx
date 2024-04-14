@@ -13,6 +13,20 @@ export default function ProfilePage() {
   const navigate = useNavigate();
   const { user, setUser, setToken, setIsLoggedIn } = useData();
 
+  useEffect(() => {
+    const metaThemeColor = document.querySelector("meta[name=theme-color]");
+    if (!metaThemeColor) return;
+
+    if (
+      window.matchMedia &&
+      window.matchMedia("(prefers-color-scheme: dark)").matches
+    ) {
+      metaThemeColor.setAttribute("content", "#1c1c1c");
+    } else {
+      metaThemeColor.setAttribute("content", "#f5f4f0");
+    }
+  }, []);
+
   if (!user) return null;
   return (
     <div className="profile-page page split-page">
