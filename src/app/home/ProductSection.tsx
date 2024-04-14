@@ -9,14 +9,18 @@ export default function ProductSection() {
   const { isLoggedIn, user } = useData();
 
   function handleBuy() {
-    if (!isLoggedIn) {
+    if (!isLoggedIn || !user) {
       navigate("/register");
       return;
     }
-    axios.get(`${import.meta.env.VITE_SERVER}/payment/pay`).then((res) => {
-      // open(res.data.url, "_blank");
-      open(res.data.url);
-    });
+    axios
+      .post(`${import.meta.env.VITE_SERVER}/payment/pay`, {
+        _id: user._id,
+      })
+      .then((res) => {
+        // open(res.data.url, "_blank");
+        open(res.data.url);
+      });
   }
   return (
     <div className="product-page home-page-section page" id="product">

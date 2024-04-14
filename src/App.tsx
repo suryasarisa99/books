@@ -14,6 +14,7 @@ import ReferalsPage from "./app/profile/profile-pages/Referals";
 import PdfViewer from "./app/PDFViewer";
 
 import { useEffect } from "react";
+import PaymentVerification from "./app/payment/PaymentVerificatin";
 
 export default function App() {
   useEffect(() => {
@@ -36,6 +37,7 @@ export default function App() {
         <Route path="/" element={<Home />} />
         <Route path="/payment" element={<Payment />} />
         <Route path="/withdrawl" element={<WithdrawlPage />} />
+        <Route path="/payment-verification" element={<PaymentVerification />} />
         <Route path="/profile" element={<ProfilePage />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/login" element={<LoginPage />} />

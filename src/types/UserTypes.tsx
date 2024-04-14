@@ -8,10 +8,10 @@ export type UserType = {
   parents: string[];
   transactions: any[];
   children: {
-    level1: string[];
-    level2: string[];
-    level3: string[];
-    level4: string[];
-    level5: string[];
+    level1: { _id: string; valid: boolean }[];
+    level2: { _id: string; valid: boolean }[];
+    level3: { _id: string; valid: boolean }[];
+    level4: { _id: string; valid: boolean }[];
+    level5: { _id: string; valid: boolean }[];
   };
 };

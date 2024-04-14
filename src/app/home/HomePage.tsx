@@ -9,6 +9,26 @@ import useData from "../../hooks/useData.js";
 export default function Home() {
   const { isLoggedIn } = useData();
 
+  // useEffect(() => {
+  //   const metaThemeColor = document.querySelector("meta[name='theme-color']");
+  //   if (!metaThemeColor) return;
+  //   metaThemeColor.setAttribute("content", "#e8eeee");
+  // }, []);
+
+  useEffect(() => {
+    const metaThemeColor = document.querySelector("meta[name=theme-color]");
+    if (!metaThemeColor) return;
+
+    if (
+      window.matchMedia &&
+      window.matchMedia("(prefers-color-scheme: dark)").matches
+    ) {
+      metaThemeColor.setAttribute("content", "#1c1c1c");
+    } else {
+      metaThemeColor.setAttribute("content", "#f5f4f0");
+    }
+  }, []);
+
   useEffect(() => {
     function handleZoom() {
       // find which page is in view

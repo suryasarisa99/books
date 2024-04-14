@@ -55,6 +55,12 @@ export default function ProfilePage() {
               <span className="value">{user.children.level1.length}</span>
               <span className="label">Referals</span>
             </div>
+            <div className="referals field">
+              <span className="value">
+                {user.children.level1.filter((c) => c.valid).length}
+              </span>
+              <span className="label">Valid Ref</span>
+            </div>
             <div className="transactions field">
               <span className="value">{user.transactions.length}</span>
               <span className="label">Transactions</span>
