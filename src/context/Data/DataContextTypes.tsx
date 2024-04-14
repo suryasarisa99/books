@@ -1,5 +1,5 @@
 import React from "react";
-import { UserType } from "src/types/UserTypes";
+import { UserType } from "../../types/UserTypes";
 
 type DataContextTypes = {
   data: number;

@@ -22,7 +22,7 @@ export default function WithdrawlPage() {
   }, [upi]);
 
   useEffect(() => {
-    const handleKeyDown = (e) => {
+    const handleKeyDown = (e: KeyboardEvent) => {
       const filterSuggestions = suggestions.filter((sugg) =>
         sugg.s.includes(upi.split("@")[1])
       );

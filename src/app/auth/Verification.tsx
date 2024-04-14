@@ -4,7 +4,7 @@ import axios from "axios";
 
 import { useNavigate, useSearchParams } from "react-router-dom";
 import useData from "../../hooks/useData";
-import { UserType } from "src/types/UserTypes";
+import { UserType } from "../../types/UserTypes";
 import usePopup from "../../hooks/usePopup";
 import { createPortal } from "react-dom";
 import PopupBox from "../../components/PopupBox";

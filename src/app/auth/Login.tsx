@@ -9,7 +9,7 @@ import { createPortal } from "react-dom";
 import PopupBox from "../../components/PopupBox";
 import { useNavigate } from "react-router-dom";
 import useData from "../.../../../hooks/useData";
-import { UserType } from "src/types/UserTypes";
+import { UserType } from "../../types/UserTypes";
 
 export default function LoginPage() {
   const [phoneNumber, setPhoneNumber] = useState("");

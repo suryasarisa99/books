@@ -6,7 +6,6 @@ import React, { useReducer, useState } from "react";
 import { useSearchParams, Link, useNavigate } from "react-router-dom";
 import { createPortal } from "react-dom";
 import { FaRegEyeSlash, FaRegEye } from "react-icons/fa";
-import { create } from "node_modules/axios/index.cjs";
 import PopupBox from "../../components/PopupBox";
 import axios from "axios";
 
